@@ -57,7 +57,8 @@ def report(threshold_kg, base_url=BASE_URL):
     try:
         shipments = fetch_shipments(base_url)
     except requests.HTTPError as error:
-        print("the depot answered with an error: %s" % error.response.status_code)
+        print("the depot answered with an error: %s" %
+              error.response.status_code)
         return 1
     except requests.RequestException as error:
         print("could not reach the depot: %s" % error.__class__.__name__)
@@ -73,7 +74,8 @@ def report(threshold_kg, base_url=BASE_URL):
 
     missing = unweighed(shipments)
     if missing:
-        print("no weight recorded for: %s" % ", ".join(str(i) for i in missing))
+        print("no weight recorded for: %s" %
+              ", ".join(str(i) for i in missing))
     return 0
 
 
