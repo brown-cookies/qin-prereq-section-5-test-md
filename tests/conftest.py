@@ -1,6 +1,8 @@
 import copy
 import pytest
 
+
+# Depotwatch
 BASE_SHIPMENTS = [
     {"id": 1,  "destination": "north", "packing": "crated", "weight_kg": 120},
     {"id": 2,  "destination": "south", "packing": "loose",  "weight_kg": 40},
@@ -77,3 +79,48 @@ def sorted_qualified_shipments():
         {"id": 1, "destination": "north", "packing": "crated", "weight_kg": 120},
         {"id": 2, "destination": "south", "packing": "loose",  "weight_kg": 110},
     ]
+
+
+# Logsweeps
+@pytest.fixture
+def tmp_log_dir(tmp_path):
+    (tmp_path / "log-1.log").write_text(
+        "INFO  depot opened\nINFO  van 1 loaded\nWARN  van 2 late\nINFO  van 2 loaded\nERROR crate 88 damaged\nINFO  depot closed\n"
+    )
+    (tmp_path / "log-2.log").write_text(
+        "INFO  depot opened\nINFO  van 1 loaded\nINFO  van 2 loaded\nINFO  depot closed\n"
+    )
+    (tmp_path / "log-3.log").write_text(
+        "INFO  depot opened\nERROR scanner offline\nERROR scanner offline\nWARN  falling back to paper\nERROR crate 12 missing\nINFO  depot closed\n"
+    )
+
+    return tmp_path
+
+
+@pytest.fixture
+def tmp_log_dir_with_empty_logs(tmp_path):
+    (tmp_path / "log-1.log").write_text("")
+    (tmp_path / "log-2.log").write_text("")
+    (tmp_path / "log-3.log").write_text("")
+
+    return tmp_path
+
+
+@pytest.fixture
+def tmp_log_dir_with_non_log_file(tmp_log_dir):
+    (tmp_log_dir / "log-4.txt").write_text(
+        "INFO  depot opened\nINFO  van 1 loaded\nWARN  van 2 late\nINFO  van 2 loaded\nERROR crate 88 damaged\nINFO  depot closed\n"
+    )
+    (tmp_log_dir / "log-5.md").write_text(
+        "INFO  depot opened\nINFO  van 1 loaded\nINFO  van 2 loaded\nINFO  depot closed\n"
+    )
+
+    return tmp_log_dir
+
+
+@pytest.fixture
+def tmp_log_dir_with_tie_error(tmp_path):
+    (tmp_path / "log-1.log").write_text("ERROR crate 88 damaged\nERROR scanner offline\n")
+    (tmp_path / "log-2.log").write_text("ERROR crate 12 missing\nERROR crate 105 damaged\n")
+
+    return tmp_path
