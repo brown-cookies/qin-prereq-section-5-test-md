@@ -124,3 +124,42 @@ def tmp_log_dir_with_tie_error(tmp_path):
     (tmp_path / "log-2.log").write_text("ERROR crate 12 missing\nERROR crate 105 damaged\n")
 
     return tmp_path
+
+
+# Receipt
+@pytest.fixture
+def manifest_long():
+    rows = [
+        ("north",  "loose",   78.0),
+        ("south",  "crated",  142.0),
+        ("east",   "loose",  205.0),
+        ("west",   "crated",  9.0),
+        ("north",  "crated", 100.0),
+        ("south",  "loose",   77.0),
+        ("east",   "crated",  15.0),
+        ("west",   "loose",  333.0),
+        ("north",  "loose",    48.0),
+        ("south",  "crated", 190.0),
+        ("north",   "crated", 120.0),
+        ("south",   "loose",   40.0),
+        ("east",    "crated", 310.0),
+    ]
+
+    return rows
+
+
+@pytest.fixture
+def manifest_short():
+    rows = [
+        ("north",  "loose",   78.0),
+        ("south",  "crated",  142.0),
+        ("east",   "loose",  205.0),
+        ("west",   "crated",  9.0),
+        ("north",  "crated", 100.0),
+        ("south",  "loose",   77.0),
+        ("east",   "crated",  15.0),
+        ("west",   "loose",  333.0),
+        ("north",  "loose",    48.0),
+    ]
+
+    return rows
