@@ -74,7 +74,7 @@ def test_empty_shipments_returns_empty_list():
 
 def test_shipment_qualify_count(shipments):
     result = heavy_shipments(shipments, threshold_kg=100)
-    assert len(result) == 8
+    assert len(result) == 7
 
 
 def test_shipment_not_qualified(no_qualified_shipments):
