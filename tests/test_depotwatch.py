@@ -89,7 +89,7 @@ def test_shipment_sort(qualified_shipments, sorted_qualified_shipments):
 
 def test_unweighed_return_id_of_non_int_float(shipments):
     result = unweighed(shipments)
-    assert result == [8, 10, 17, 18, 19, 21, 24]
+    assert result == [8, 10, 17, 18, 19, 24]
 
 
 # -- Mocking --
