@@ -66,7 +66,8 @@ def discount_pence(subtotal_pence, row_count):
 
 def total_pence(rows):
     """The full cost of a run, discount applied."""
-    subtotal = sum(line_cost_pence(packing, weight) for _, packing, weight in rows)
+    subtotal = sum(line_cost_pence(packing, weight)
+                   for _, packing, weight in rows)
     return subtotal - discount_pence(subtotal, len(rows))
 
 
@@ -82,7 +83,8 @@ def render(rows):
     lines = []
     for destination, packing, weight in rows:
         cost = line_cost_pence(packing, weight)
-        lines.append("%-8s %-7s %6.1fkg  %8s" % (destination, packing, weight, format_pence(cost)))
+        lines.append("%-8s %-7s %6.1fkg  %8s" %
+                     (destination, packing, weight, format_pence(cost)))
     lines.append("%d rows" % len(rows))
     lines.append("total %s" % format_pence(total_pence(rows)))
     return lines
